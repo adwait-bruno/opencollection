@@ -10,10 +10,11 @@ import 'prismjs/components/prism-graphql';
 
 Prism.languages.insertBefore('javascript', 'keyword', {
   'variable-declaration': {
-    pattern: /\b(?:const|let|var)\s+[A-Za-z_$][\w$]*/,
+    pattern: /\b(?:const|let|var)\s+(?:\{[^}]*\}|\[[^\]]*\]|[A-Za-z_$][\w$]*(?:\s*,\s*[A-Za-z_$][\w$]*)*)/,
     inside: {
       keyword: /^(?:const|let|var)/,
-      'var-name': /[A-Za-z_$][\w$]*$/
+      'var-name': /[A-Za-z_$][\w$]*/,
+      punctuation: /[{}[\],]/
     }
   }
 });
@@ -24,5 +25,10 @@ Prism.languages.insertBefore('javascript', 'punctuation', {
   },
   variable: /\b[A-Za-z_$][\w$]*\b/
 });
+
+Prism.languages.javascript.function = {
+  pattern: /(\.\s*)[A-Za-z_$][\w$]*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,
+  lookbehind: true
+};
 
 export default Prism;
